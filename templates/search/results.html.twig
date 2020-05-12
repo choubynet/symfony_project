@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de la recherche{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .atitle, .atitle:hover {
+            text-decoration: none !important;
+            decoration: none !important;
+            color: inherit;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+{{ render(controller('App\\Controller\\HomeController:searchBar', {'search': search, 'search_by': search_by }))}}
+{{ nbresults }} Résultats trouvés :
+</div>
+<div class="container">
+<div class="row flex">
+    {% for item in results %}
+        <div style="margin-bottom: 1rem;" class="col-md-4">
+            <div class="card">
+                <h3 class="card-header"><a class="atitle" href="/movie/{{ item.id }}">{{ item.title }}</a></h3>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% if item.release_date is not defined %}   
+                            ?
+                        {% else %}
+                            {{ item.release_date | date('Y') }}
+                        {% endif %}
+                    </h5>
+                    {% if app.user %}
+                        {% if is_in_fav[loop.index0] == 0 %}
+                            <a href="/search/addfavorite/{{ item.id }}/{{ search }}/{{ search_by }}">
+                                <span class="material-icons">
+                                    star_border
+                                </span>
+                            </a>
+                        {% else %}
+                            <a href="/search/deletefavorite/{{ item.id }}/{{ search }}/{{ search_by }}">
+                                <span class="material-icons" style="color:yellow">
+                                    star
+                                </span>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div style="background-color: black;" class="text-center">
+                    <a href="/movie/{{ item.id }}">
+                    <img style="height: 300px;" src=
+                        {% if item.poster_path == null %}
+                            "{{ asset('images/default.jpg') }}"
+                        {% else %}
+                            "https://image.tmdb.org/t/p/w780{{ item.poster_path }}"
+                        {% endif %}
+                     alt="Card image cap"></a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{item.overview [:100]}}...</p>
+                </div>
+                <div class="card-body">
+                    <a href="/movie/{{ item.id }}" class="card-link">+ plus d'infos</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

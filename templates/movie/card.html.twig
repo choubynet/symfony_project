@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block stylesheets %}
+<style>
+.span4 img {
+    margin-right: 10px;
+    width: 50%;
+}
+.span4 .img-left {
+    float: left;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+	    <div class="row">
+		    <h1>{{ title }}</h1>
+	    </div>        
+        <div class="row">
+		    <p>
+                {{ runtime }} minutes | 
+                {{ release | date('d-m-Y') }} | 
+                {% for item in country %}
+                    {% if loop.index0 == 0 %}
+                        {{ item.name }}
+                    {% else %}
+                        , {{ item.name }}
+                    {% endif %}
+                {% endfor %} | 
+                {% for item in genres %}
+                    {% if loop.index0 == 0 %}
+                        {{ item.name }}
+                    {% else %}
+                        , {{ item.name }}
+                    {% endif %}
+                {% endfor %}
+            </p>
+	    </div>	
+	    <div class="block">
+            <div class="row">
+                <div class="span4">
+                    <img class="img-left" src=
+                        {% if image_path == null %}
+                            "{{ asset('images/default.jpg') }}"
+                        {% else %}
+                            "https://image.tmdb.org/t/p/w780{{ image_path }}"
+                        {% endif %}
+                    />
+                    {% if app.user %}
+                        {% if is_in_fav == 0 %}
+                            <a href="/movie/addfavorite/{{ id }}">
+                                <span class="material-icons">
+                                    star_border
+                                </span>
+                                AJOUTER A MES FAVORIS
+                            </a>
+                        {% else %}
+                            <a href="/movie/deletefavorite/{{ id }}">
+                                <span class="material-icons" style="color:yellow">
+                                    star
+                                </span>
+                                ENLEVER DE MES FAVORIS
+                            </a>
+                        {% endif %}
+                        <select id="addtolist" name="addtolist">
+                            <option value="" disabled selected>Ajouter à une liste</option>
+                            {% for list in lists %}
+                                {% if list.name != 'Mes favoris' %}
+                                    <option value="{{ list.id }}">
+                                        {% if is_in_list[loop.index0] == 1 %}
+                                            &#10003; 
+                                        {% endif %}
+                                        {{ list.name }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                            <option value="new">- Créer une nouvelle liste -</option>
+                        </select>                        
+                    {% endif %}
+                    <p>{{ summary }}</p>
+                    <p>
+                        <strong>
+                            {% if director_count == 1 %}
+                                Réalisateur : 
+                            {% else %}
+                                Réalisateurs : 
+                            {% endif %}
+                        </strong>
+                        {% for item in director %}
+                            {% if loop.index0 == 0 %}
+                                {{ item }}
+                            {% else %}
+                                , {{ item }}
+                            {% endif %}
+                        {% endfor %}
+                    </p> 
+                    <p>
+                        <strong>
+                            {% if writer_count == 1 %}
+                                Scénariste : 
+                            {% else %}
+                                Scénaristes : 
+                            {% endif %}
+                        </strong>
+                        {% for item in writer %}
+                            {% if loop.index0 == 0 %}
+                                {{ item }}
+                            {% else %}
+                                , {{ item }}
+                            {% endif %}
+                        {% endfor %}
+                    </p> 
+                    <p>
+                        <strong>
+                            {% if actor_count == 1 %}
+                                Acteur : 
+                            {% else %}
+                                Acteurs : 
+                            {% endif %}
+                        </strong>
+                        {% for item in cast | slice(0, 15) %}
+                            {% if loop.index0 == 0 %}
+                                {{ item.name }}
+                            {% elseif loop.index0 == 14 %}
+                                {{ item.name }}...
+                            {% else %}
+                                , {{ item.name }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>                    
+                </div>
+            </div>
+        </div>    
+    </div>
+    <script>
+        var id = {{ id }};
+        document.querySelector("select").addEventListener("change", function (){
+            window.location.href = "/movie/addlist/" + id + "/" + this.value;
+        }, false);
+    </script>
+{% endblock %}
+

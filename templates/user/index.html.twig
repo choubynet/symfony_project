@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello User !{% endblock %}
+
+{% block body %}
+    {% if mess %}
+        <div class="alert alert-dismissible alert-success w-25 mx-auto">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class="text-center">{{mess}}</p>
+        </div>
+    {% endif %}
+
+{% endblock %}

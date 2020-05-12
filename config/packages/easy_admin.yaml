@@ -1,0 +1,43 @@
+easy_admin:
+    site_name: 'Movie Lists Project <em style="font-size: 80%">Admin section</em>' 
+    user:
+        display_name: true
+        name_property_path: 'username'   
+    entities:
+        Users:
+            class: App\Entity\Users
+            label: 'Users'
+            list:
+                title: "See all users"                
+                fields: 
+                    - 'id'
+                    - 'last_name'
+                    - 'first_name'
+                    - 'birthdate'
+                    - 'username'
+                    - { property: 'email', type: 'email' }
+                    - { property: 'inscription_date', label: 'Inscription' }
+                    - { property: 'is_banned', label: 'Banned' }
+                    - { property: 'is_admin', label: 'Admin', type: 'boolean' }
+            edit:
+                title: "Edit user"                
+                fields: 
+                    - 'last_name'
+                    - 'first_name'
+                    - { property: 'birthdate', type: 'birthday' }
+                    - 'username'
+                    - 'email'
+                    - { property: 'password', type: 'repeated', type_options: { invalid_message: 'Les mots de passe doivent correspondre', first_options: { label: 'Password' }, second_options: { label: 'Password confirmation' }}  }
+                    - { property: 'is_banned', label: 'Banned' }
+                    - { property: 'is_admin', label: 'Admin' }
+            new:
+                title: "Create new user"                
+                fields: 
+                    - 'last_name'
+                    - 'first_name'
+                    - { property: 'birthdate', type: 'birthday' }
+                    - 'username'
+                    - 'email'
+                    - { property: 'password', type: 'repeated', type_options: { invalid_message: 'Les mots de passe doivent correspondre', first_options: { label: 'Password' }, second_options: { label: 'Password confirmation' }}  }
+                    - { property: 'is_admin', label: 'Admin' }
+            

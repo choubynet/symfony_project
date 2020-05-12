@@ -1,0 +1,17 @@
+
+    <div class="active-cyan-3 active-cyan-4 mb-4 ">
+        {{ form_start(form, {
+            'attr': {'class': 'row', 'action': path('handle_search')}
+        }) }}
+            <div class="col-md-10">
+            {{ form_widget(form.search, {
+                'attr': {'class': 'form-control search-query', 'value' : search}
+            }) }}
+            </div>
+            <div class="col-md-2">
+            {{ form_widget(form.isAttending, {
+                'attr': {'class': 'form-control search-query', 'value' : search_by}
+            }) }}
+            </div>
+        {{ form_end(form) }}
+    </div>

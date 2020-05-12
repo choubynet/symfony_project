@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Editer la liste</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.name, {'label': 'Titre'} ) }}
+    {{ form_row(form.description, {'label': 'Description'}) }}
+    {{ form_row(form.is_shared, {'label': 'Partager'}) }}
+    {{ form_row(form.save, {'label': 'Valider'}) }}
+        
+    {{ form_end(form) }}
+
+
+{% endblock %}

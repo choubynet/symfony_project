@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes listes{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .span4 img {
+            margin-right: 10px;
+            width: 10%;
+        }
+
+        .span4 .img-left {
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<br>
+<div class="container">
+<h3>
+    <a href="/list/favorites">
+        <span class="material-icons" style="color:yellow">
+            star
+        </span>
+        Mes favoris
+        <span class="material-icons" style="color:yellow">
+            star
+        </span>
+    <a>
+</h3>
+<p>
+    <a href="/list/favorites/">Modifier</a> | 
+    {% if favorites.IsShared == 0 %}
+        <a href="/list/share/{{ favorites.id }}">Partager</a>
+    {% else %}
+        <a href="/list/unshare/{{ favorites.id }}">Ne plus partager</a>
+    {% endif %}
+</p>
+<br>
+<h3>Mes listes</h3>
+<a href="/list/new">Créer une nouvelle liste</a>
+<br><br>
+{% for list in lists %}
+    {% if list.name != 'Mes favoris' %}
+    <div class="card">
+            <div class="row">
+                <div class="span4">
+                    <a href="/list/edit/{{ list.id }}">
+                    <img class="img-left" src=
+                        {% if images_url[loop.index0] == "none" %}
+                            "{{ asset('images/default.jpg') }}"
+                        {% else %}
+                            "{{ images_url[loop.index0] }}"
+                        {% endif %}
+                    />
+                    </a>
+        <h5>
+            <a href="/list/edit/{{ list.id }}">{{ list.name }}</a>
+        </h5>
+        <p style="font-size: 0.8rem; ">
+            <a href="/list/edit/{{ list.id }}">Modifier</a> | 
+            <a href="/list/delete/{{ list.id }}">Supprimer</a> | 
+            {% if list.IsShared == 0 %}
+                <a href="/list/share/{{ list.id }}">Partager</a>
+            {% else %}
+                <a href="/list/unshare/{{ list.id }}">Ne plus partager</a>
+            {% endif %}
+        </p>
+        </div>
+        </div>
+        </div>
+        <br>
+    {% endif %}
+{% endfor %} 
+</div>
+{% endblock %}

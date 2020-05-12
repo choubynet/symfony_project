@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle liste{% endblock %}
+
+{% block body %}
+    <h1>Nouvelle liste</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.name, {'label': 'Titre' , 'attr': {'placeholder': 'Titre'} }) }}
+    {{ form_row(form.description, {'label': 'Description' , 'attr': {'placeholder': 'Description'} }) }}
+    {{ form_row(form.is_shared, {'label': 'Partager'}) }}
+    {{ form_row(form.save, {'label': 'Valider'}) }}
+        
+    {{ form_end(form) }}
+
+
+{% endblock %}

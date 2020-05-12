@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ list.name }}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .span4 img {
+            margin-right: 10px;
+            width: 10%;
+        }
+
+        .span4 .img-left {
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <h1>{{ list.name }}<a></h1>
+    <p>Un top par {{ list.user.username }}</p>    
+    <h4>{{ list.description }}</h4>
+    <br>
+    {% for movie in movies %}
+        <div class="card">
+            <div class="row">
+                <div class="span4">
+                    <a href="/movie/{{ movie.id }}">
+                    <img class="img-left" src=
+                        {% if movie.poster_path == null %}
+                            "{{ asset('images/default.jpg') }}"
+                        {% else %}
+                            "https://image.tmdb.org/t/p/w780{{ movie.poster_path }}"
+                        {% endif %}
+                    />
+                    </a>
+                    <h5>
+                        <a href="/movie/{{ movie.id }}"><strong>{{ movie.title }}</strong></a>
+                    </h5> 
+                    <p>{{ movie.release_date | date('Y') }}</p>                                 
+                </div>
+            </div>
+        </div>        
+        <br>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .span4 img {
+            margin-right: 10px;
+            width: 10%;
+        }
+
+        .span4 .img-left {
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <h1>Classement des films favoris des utilisateurs<a></h1>
+    <br>
+    {% for movie in movies_in_favorites %}
+        <div class="block">
+            <div class="row">
+                <div class="span4">
+                    <img class="img-left" src=
+                        {% if movies_details[loop.index0].poster_path == null %}
+                            "{{ asset('images/default.jpg') }}"
+                        {% else %}
+                            "https://image.tmdb.org/t/p/w780{{ movies_details[loop.index0].poster_path }}"
+                        {% endif %}
+                    />
+                    <h5>
+                        <a href="/movie/{{ movies_details[loop.index0].id }}"><strong>{{ movies_details[loop.index0].title }}</strong></a>
+                    </h5> 
+                    <p>{{ movies_details[loop.index0].release_date | date('Y') }}</p> 
+                    <p>Nombre de fois dans les favoris : {{movie}}</p>                                
+                </div>
+            </div>
+        </div>        
+        <br>
+    {% endfor %}
+    </div>
+{% endblock %}

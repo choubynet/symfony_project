@@ -1,0 +1,3 @@
+# login:
+#    path: /
+#    controller: App\Controller\LoginController::index

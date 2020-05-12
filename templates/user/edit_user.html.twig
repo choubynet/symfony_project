@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier mes informations{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h2>Modifier mes données personnelles</h2>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.first_name, {'label': 'Prénom' , 'attr': {'value': app.user.firstName } }) }}
+    {{ form_row(form.last_name, {'label': 'Nom' , 'attr': {'value': app.user.lastName } }) }}
+    {{ form_row(form.username, {'label': 'pseudo' , 'attr': {'value': app.user.username} }) }}
+    {{ form_row(form.email, {'label': 'Mail' , 'attr': {'value': app.user.email } }) }}
+    {{ form_row(form.password, {'label': 'Mot de passe' , 'attr': {'value': app.user.firstName } }) }}
+    <div class="w-25 mx-auto">
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+    </div>
+    {{ form_end(form) }}
+
+    <h2>Supression du compte</h2>
+    
+    <div class="w-25 mx-auto">
+        <button type="submit" class="btn btn-danger">
+            <a href="/user/delet">Supression</a>
+        </button>
+    </div>
+
+</div>    
+
+{% endblock %}
